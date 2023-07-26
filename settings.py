@@ -1,0 +1,4 @@
+WIDTH = 500
+HEIGHT = 500
+R = 5
+dt = 1
