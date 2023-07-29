@@ -1,20 +1,21 @@
 const root = document.getElementById("cnvs");
 const cnvs = root.getContext("2d");
-let G = 2
-let dt = 0.01
+let G = 0.667
+let dt = 0.0001
 
 class Matter {
-    constructor(m, r, x, y, vx, vy, clr) {
+    constructor(m, r, x, y, vx, vy, src) {
         this.m = m;
         this.r = r;
         this.x = x;
         this.y = y;
         this.vx = vx;
         this.vy = vy;
-        this.clr = clr;
+        this.img = new Image();
+        this.img.src = src;
     }
     date() {
-        return {'m': this.m, 'x': this.x, 'y': this.y, 'vx': this.vx, 'vy': this.vy, 'clr': this.clr};
+        return {'m': this.m, 'x': this.x, 'y': this.y, 'vx': this.vx, 'vy': this.vy, 'img': this.img};
     }
     move() {
         this.x += this.vx*dt;
@@ -22,8 +23,7 @@ class Matter {
 //        cnvs.arc(this.x, this.y, this.r, 0, 2*Math.PI, false);
 //        cnvs.fillStyle = this.clr;
 //        cnvs.fill();
-        cnvs.fillStyle = this.clr;
-        cnvs.fillRect(this.x, this.y, this.r, this.r);
+        cnvs.drawImage(this.img, this.x - this.r, this.y - this.r, this.r<<1, this.r<<1);
     }
     upd(vx, vy) {
         this.vx += vx;
@@ -31,13 +31,13 @@ class Matter {
     }
 }
 let Matters = [
-    new Matter(10000, 15, 240, 200, 0, 0, 'green'),
-    new Matter(10, 15,  200, 200, -1, 23, 'black')
+    new Matter(198892000000, 25, 349.5, 200, 0, 0, 'red_planet.png'),
+    new Matter(597420, 25,  200, 200, 0, 29765, 'Earth.png')
 ];
 
 function rendering() {
     cnvs.fillStyle = 'white'
-    //cnvs.fillRect(0, 0, 1600, 2500)
+    cnvs.fillRect(0, 0, 1600, 2500)
     for (let i = 0; i < 2; ++i) {
         for (let j = 0; j < i; ++j) {
             let a = Matters[i].date();
